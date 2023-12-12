@@ -1,16 +1,4 @@
 function updateTime() {
-  //My Location
-  let myLocationElement = document.querySelector("#my-location");
-  let myLocationDateElement = myLocationElement.querySelector(".date");
-  let myLocationTimeElement = myLocationElement.querySelector(".time");
-  let myLocationName = myLocationElement.querySelector("h2");
-  myLocationName.innerHTML = moment.tz.guess().replace("/", ", ") + "📍";
-
-  myLocationDateElement.innerHTML = moment().format("MMMM Do yyyy");
-  myLocationTimeElement.innerHTML = moment().format(
-    "h:mm:ss:SSS [<small>] A [</small>]"
-  );
-
   //Los Angeles
   let losAngelesElement = document.querySelector("#los-angeles");
   let losAngelesDateElement = losAngelesElement.querySelector(".date");
@@ -53,3 +41,51 @@ function updateTime() {
 
 updateTime();
 setInterval(updateTime, 1);
+
+function updateCurrentTime() {
+  //My Location
+  let myLocationElement = document.querySelector("#my-location");
+  let myLocationDateElement = myLocationElement.querySelector(".date");
+  let myLocationTimeElement = myLocationElement.querySelector(".time");
+  let myLocationName = myLocationElement.querySelector("h2");
+  myLocationName.innerHTML = moment.tz.guess().replace("/", ", ") + "📍";
+
+  myLocationDateElement.innerHTML = moment().format("MMMM Do yyyy");
+  myLocationTimeElement.innerHTML = moment().format(
+    "h:mm:ss:SSS [<small>] A [</small>]"
+  );
+}
+
+updateCurrentTime();
+let intervalId = setInterval(updateCurrentTime, 1);
+
+function changeLocation(event) {
+  clearInterval(intervalId);
+  function updateLocationTime() {
+    let selectedLocation = event.target.value;
+    let locationTimeElement = moment().tz(selectedLocation);
+    let locationName = locationTimeElement._z.name
+      .replace("/", ", ")
+      .replace("_", " ");
+    let locationDate = locationTimeElement.format("MMMM Do yyyy");
+    let locationTime = locationTimeElement.format("h:mm:ss:SSS ");
+    console.log(locationName);
+    console.log(locationDate);
+    console.log(locationTime);
+
+    let locationElement = document.querySelector("#cities");
+    locationElement.innerHTML = `<div class="city" id="my-location">
+      <div>
+      <h2>${locationName}</h2>
+      <div class="date">${locationDate}</div>
+      </div>
+      <div class="time">${locationTime}<small>${locationTimeElement.format(
+      "A"
+    )}</small></div>
+          </div>`;
+  }
+  updateLocationTime;
+  setInterval(updateLocationTime, 1);
+}
+let selectCity = document.querySelector("#select");
+selectCity.addEventListener("change", changeLocation);
