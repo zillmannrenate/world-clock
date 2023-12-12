@@ -1,5 +1,17 @@
-//Los Angeles
 function updateTime() {
+  //My Location
+  let myLocationElement = document.querySelector("#my-location");
+  let myLocationDateElement = myLocationElement.querySelector(".date");
+  let myLocationTimeElement = myLocationElement.querySelector(".time");
+  let myLocationName = myLocationElement.querySelector("h2");
+  myLocationName.innerHTML = moment.tz.guess().replace("/", ", ") + "📍";
+
+  myLocationDateElement.innerHTML = moment().format("MMMM Do yyyy");
+  myLocationTimeElement.innerHTML = moment().format(
+    "h:mm:ss:SSS [<small>] A [</small>]"
+  );
+
+  //Los Angeles
   let losAngelesElement = document.querySelector("#los-angeles");
   let losAngelesDateElement = losAngelesElement.querySelector(".date");
   let losAngelesTimeElement = losAngelesElement.querySelector(".time");
@@ -23,6 +35,19 @@ function updateTime() {
     .format("MMMM Do yyyy");
   viennaTimeElement.innerHTML = viennaTime
     .tz("Europe / Vienna")
+    .format("h:mm:ss:SSS [<small>] A [</small>]");
+
+  //Nairobi
+  let nairobiElement = document.querySelector("#nairobi");
+  let nairobiDateElement = nairobiElement.querySelector(".date");
+  let nairobiTimeElement = nairobiElement.querySelector(".time");
+  let nairobiTime = moment();
+
+  nairobiDateElement.innerHTML = nairobiTime
+    .tz("Africa/Nairobi")
+    .format("MMMM Do yyyy");
+  nairobiTimeElement.innerHTML = nairobiTime
+    .tz("Africa/Nairobi")
     .format("h:mm:ss:SSS [<small>] A [</small>]");
 }
 
